@@ -26,6 +26,14 @@ spec:
             }
         }
 
+        stage('Debug Workspace') {
+            steps {
+                container('node') {
+                    sh 'ls -laR'
+                }
+            }
+        }
+
         stage('Install Server Dependencies') {
             steps {
                 container('node') {
