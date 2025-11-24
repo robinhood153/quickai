@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  server:
+    build: ./server
+    container_name: quickai-server
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./server/.env
+    restart: always
+
+  client:
+    build: ./client
+    container_name: quickai-client
+    ports:
+      - "80:80"
+    restart: always

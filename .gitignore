@@ -1,0 +1,64 @@
+# ---------------------
+# Node Dependencies
+# ---------------------
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# ---------------------
+# Environment Files
+# ---------------------
+*.env
+.env
+client/.env
+server/.env
+
+# ---------------------
+# Build Output
+# ---------------------
+dist/
+client/dist/
+server/dist/
+build/
+client/build/
+
+# ---------------------
+# Logs
+# ---------------------
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+logs/
+*.log
+
+# ---------------------
+# System Files
+# ---------------------
+.DS_Store
+Thumbs.db
+
+# ---------------------
+# VSCode
+# ---------------------
+.vscode/
+*.code-workspace
+
+# ---------------------
+# Docker
+# ---------------------
+docker-compose.override.yml
+.docker/
+*.pid
+
+# ---------------------
+# Lock Files (optional but recommended)
+# ---------------------
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# ---------------------
+# Other
+# ---------------------
+coverage/
