@@ -1,12 +1,25 @@
 pipeline {
     agent {
-        docker {
-            image 'docker:latest'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        kubernetes {
+            yaml """
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: dind
+    image: docker:dind
+    securityContext:
+      privileged: true
+    env:
+      - name: DOCKER_TLS_CERTDIR
+        value: ""
+    tty: true
+"""
         }
     }
 
     stages {
+
         stage('Checkout') {
             steps {
                 checkout scm
@@ -15,9 +28,13 @@ pipeline {
 
         stage('Build Client') {
             steps {
-                dir('client') {
-                    script {
-                        docker.build("quickai-client:${env.BUILD_ID}")
+                container('dind') {
+                    dir('client') {
+                        sh '''
+                            echo "Building CLIENT Docker Image..."
+                            docker build -t quickai-client:${BUILD_ID} .
+                            docker image ls
+                        '''
                     }
                 }
             }
@@ -25,9 +42,13 @@ pipeline {
 
         stage('Build Server') {
             steps {
-                dir('server') {
-                    script {
-                        docker.build("quickai-server:${env.BUILD_ID}")
+                container('dind') {
+                    dir('server') {
+                        sh '''
+                            echo "Building SERVER Docker Image..."
+                            docker build -t quickai-server:${BUILD_ID} .
+                            docker image ls
+                        '''
                     }
                 }
             }
